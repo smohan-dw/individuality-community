@@ -24,16 +24,16 @@ use alloy_core::{
 };
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use frame_support::{weights::Weight, BoundedVec};
-use indiv_support::{
-	labels::{is_lite_person_label, is_person_label},
-	traits::{Identifier, MembershipProver, PEOPLE_IDENTIFIER, PEOPLE_LITE_IDENTIFIER},
-};
+use indiv_support::traits::{Identifier, MembershipProver, PEOPLE_IDENTIFIER, PEOPLE_LITE_IDENTIFIER};
 use scale_info::TypeInfo;
 use sp_core::{ConstU32, H160};
 use sp_runtime::DispatchError;
 use verifiable::GenerateVerifiable;
 
-use crate::Config;
+use crate::{
+	labels::{is_lite_person_label, is_person_label},
+	Config,
+};
 
 /// The proof type from the configured `MemberService`.
 pub type ProofOf<T> =
