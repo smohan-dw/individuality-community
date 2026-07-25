@@ -141,13 +141,13 @@ indiv-support = { path = "support", default-features = false }
 log = { version = "0.4.22", default-features = false }
 merlin = { version = "3.0", default-features = false }
 pallet-ah-ops = { version = "0.7.0", default-features = false }
-pallet-asset-conversion = { version = "29.0.0", default-features = false }
+pallet-asset-conversion = { version = "31.0.0", default-features = false }
 pallet-asset-conversion-ops = { version = "0.15.0", default-features = false }
 pallet-asset-conversion-precompiles = { version = "0.2.0", default-features = false }
-pallet-asset-conversion-tx-payment = { version = "29.0.0", default-features = false }
+pallet-asset-conversion-tx-payment = { version = "31.0.0", default-features = false }
 pallet-asset-rate = { version = "26.0.0", default-features = false }
 pallet-asset-rewards = { version = "0.9.0", default-features = false }
-pallet-asset-tx-payment = { version = "47.0.0", default-features = false }
+pallet-asset-tx-payment = { version = "49.0.0", default-features = false }
 pallet-assets = { version = "52.0.0", default-features = false }
 pallet-assets-freezer = { version = "0.15.0", default-features = false }
 pallet-assets-holder = { version = "0.12.0", default-features = false }
@@ -192,7 +192,7 @@ pallet-staking-runtime-api = { version = "32.0.0", default-features = false }
 pallet-state-trie-migration = { version = "52.0.0", default-features = false }
 pallet-sudo = { version = "47.0.0", default-features = false }
 pallet-timestamp = { version = "46.0.0", default-features = false }
-pallet-transaction-payment = { version = "47.0.0", default-features = false }
+pallet-transaction-payment = { version = "49.0.0", default-features = false }
 pallet-transaction-payment-rpc-runtime-api = { version = "47.0.0", default-features = false }
 pallet-treasury = { version = "46.0.0", default-features = false }
 pallet-uniques = { version = "47.0.0", default-features = false }
@@ -250,7 +250,7 @@ sp-runtime = { version = "48.0.0", default-features = false }
 sp-session = { version = "44.0.0", default-features = false }
 sp-staking = { version = "44.0.0", default-features = false }
 sp-state-machine = { version = "0.51.0", default-features = false }
-sp-statement-store = { version = "26.0.0", default-features = false }
+sp-statement-store = { version = "28.0.0", default-features = false }
 sp-std = { version = "14.0.0", default-features = false }
 sp-storage = { version = "23.0.0", default-features = false }
 sp-timestamp = { version = "42.0.0", default-features = false }
@@ -358,3 +358,33 @@ ark-vrf = { opt-level = 3 }
 w3f-ring-proof = { opt-level = 3 }
 rayon = { opt-level = 3 }
 digest = { opt-level = 3 }
+
+# cord-commons Task 4.3 (R9 fork remedy, verification-only unification): redirects the crates.io
+# version requests this fork's own manifest (and its `pallet-asset-tx-payment` etc. third-party
+# dependents) make onto the SAME `dhiway/sdk` stable2606 fork cord-commons builds against, so this
+# repo's own `cargo check`/`cargo test` on the R9-clean pallets (proof-of-ink, mob-rule,
+# alias-accounts, airdrop, pgas) exercises a single-instance crate graph exactly like it will once
+# consumed as a git dependency from cord-commons (whose own root Cargo.toml carries the identical
+# patch table). Not used by this repo's OTHER workspace members (the two `runtimes/next-*`
+# parachain runtimes, `game`, `value-transfer-auth`, `storage-initialization`) — those keep their
+# original stable2604 crates.io resolution; nothing here forces them onto stable2606.
+[patch.crates-io]
+frame-benchmarking = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+frame-executive = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+frame-support = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+frame-system = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-api = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-arithmetic = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-core = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-io = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-keystore = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-runtime = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-statement-store = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+staging-xcm = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-assets = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-assets-holder = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-asset-conversion = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-asset-conversion-tx-payment = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-asset-tx-payment = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-balances = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-transaction-payment = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
