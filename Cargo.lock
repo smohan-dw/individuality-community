@@ -2239,7 +2239,7 @@ dependencies = [
  "sp-api 42.0.0",
  "sp-consensus-babe",
  "sp-core 41.0.0",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "sp-externalities 0.32.0",
  "sp-inherents 42.0.0",
  "sp-io 46.0.0",
@@ -3299,7 +3299,7 @@ dependencies = [
  "scale-encode",
  "scale-info",
  "scale-type-resolver",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "thiserror 2.0.18",
 ]
 
@@ -3557,7 +3557,7 @@ dependencies = [
  "proc-macro-warning",
  "proc-macro2",
  "quote",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "syn 2.0.117",
 ]
 
@@ -3578,7 +3578,7 @@ dependencies = [
  "proc-macro-warning",
  "proc-macro2",
  "quote",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "syn 2.0.117",
 ]
 
@@ -3598,7 +3598,7 @@ dependencies = [
  "proc-macro-warning",
  "proc-macro2",
  "quote",
- "sp-crypto-hashing 0.1.0 (git+https://github.com/dhiway/sdk?branch=release-v1.24.0)",
+ "sp-crypto-hashing",
  "syn 2.0.117",
 ]
 
@@ -4441,6 +4441,7 @@ dependencies = [
  "scale-info",
  "schnorrkel",
  "sp-core 43.0.0",
+ "sp-crypto-hashing",
  "sp-io 48.0.0",
  "sp-keystore 0.49.0",
  "sp-runtime 48.0.0",
@@ -4748,6 +4749,7 @@ dependencies = [
  "parking_lot",
  "scale-info",
  "sp-core 43.0.0",
+ "sp-crypto-hashing",
  "sp-io 48.0.0",
  "sp-runtime 48.0.0",
  "verifiable",
@@ -10035,7 +10037,7 @@ dependencies = [
  "sp-api 42.0.0",
  "sp-application-crypto 46.0.0",
  "sp-core 41.0.0",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "sp-io 46.0.0",
  "sp-keystore 0.47.0",
  "sp-mmr-primitives",
@@ -10137,7 +10139,7 @@ dependencies = [
  "secp256k1 0.28.2",
  "secrecy 0.8.0",
  "serde",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "sp-debug-derive 14.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "sp-externalities 0.30.0",
  "sp-runtime-interface 29.0.1",
@@ -10186,7 +10188,7 @@ dependencies = [
  "secrecy 0.8.0",
  "serde",
  "sha2 0.10.9",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "sp-debug-derive 15.0.0",
  "sp-externalities 0.32.0",
  "sp-std 14.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -10233,7 +10235,7 @@ dependencies = [
  "secrecy 0.8.0",
  "serde",
  "sha2 0.10.9",
- "sp-crypto-hashing 0.1.0 (git+https://github.com/dhiway/sdk?branch=release-v1.24.0)",
+ "sp-crypto-hashing",
  "sp-debug-derive 14.0.0 (git+https://github.com/dhiway/sdk?branch=release-v1.24.0)",
  "sp-externalities 0.34.0",
  "sp-std 14.0.0 (git+https://github.com/dhiway/sdk?branch=release-v1.24.0)",
@@ -10244,20 +10246,6 @@ dependencies = [
  "tracing",
  "w3f-bls",
  "zeroize",
-]
-
-[[package]]
-name = "sp-crypto-hashing"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc9927a7f81334ed5b8a98a4a978c81324d12bd9713ec76b5c68fd410174c5eb"
-dependencies = [
- "blake2b_simd",
- "byteorder",
- "digest 0.10.7",
- "sha2 0.10.9",
- "sha3 0.10.9",
- "twox-hash",
 ]
 
 [[package]]
@@ -10280,7 +10268,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b85d0f1f1e44bd8617eb2a48203ee854981229e3e79e6f468c7175d5fd37489b"
 dependencies = [
  "quote",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "syn 2.0.117",
 ]
 
@@ -10290,7 +10278,7 @@ version = "0.1.0"
 source = "git+https://github.com/dhiway/sdk?branch=release-v1.24.0#cc190ea83c590b6a14a6b9771ab02c81618dc118"
 dependencies = [
  "quote",
- "sp-crypto-hashing 0.1.0 (git+https://github.com/dhiway/sdk?branch=release-v1.24.0)",
+ "sp-crypto-hashing",
  "syn 2.0.117",
 ]
 
@@ -10464,7 +10452,7 @@ dependencies = [
  "rustversion",
  "secp256k1 0.28.2",
  "sp-core 35.0.0",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "sp-externalities 0.30.0",
  "sp-keystore 0.41.0",
  "sp-runtime-interface 29.0.1",
@@ -10491,7 +10479,7 @@ dependencies = [
  "rustversion",
  "secp256k1 0.28.2",
  "sp-core 41.0.0",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "sp-externalities 0.32.0",
  "sp-keystore 0.47.0",
  "sp-runtime-interface 35.0.0",
@@ -10517,7 +10505,7 @@ dependencies = [
  "rustversion",
  "secp256k1 0.28.2",
  "sp-core 43.0.0",
- "sp-crypto-hashing 0.1.0 (git+https://github.com/dhiway/sdk?branch=release-v1.24.0)",
+ "sp-crypto-hashing",
  "sp-externalities 0.34.0",
  "sp-keystore 0.49.0",
  "sp-runtime-interface 37.0.0",
@@ -11007,7 +10995,7 @@ dependencies = [
  "sp-api 43.0.0",
  "sp-application-crypto 48.0.0",
  "sp-core 43.0.0",
- "sp-crypto-hashing 0.1.0 (git+https://github.com/dhiway/sdk?branch=release-v1.24.0)",
+ "sp-crypto-hashing",
  "sp-externalities 0.34.0",
  "sp-runtime 48.0.0",
  "sp-runtime-interface 37.0.0",
@@ -11732,7 +11720,7 @@ dependencies = [
  "scale-value",
  "serde",
  "serde_json",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "subxt-metadata",
  "thiserror 2.0.18",
  "tracing",
@@ -11749,7 +11737,7 @@ dependencies = [
  "hashbrown 0.14.5",
  "parity-scale-codec",
  "scale-info",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "thiserror 2.0.18",
 ]
 
@@ -11777,7 +11765,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.9",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "subxt-core",
  "thiserror 2.0.18",
  "zeroize",

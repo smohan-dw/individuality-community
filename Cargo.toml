@@ -235,6 +235,7 @@ sp-authority-discovery = { version = "42.0.0", default-features = false }
 sp-block-builder = { version = "42.0.0", default-features = false }
 sp-consensus-aura = { version = "0.48.0", default-features = false }
 sp-consensus-babe = { version = "0.48.0", default-features = false }
+sp-crypto-hashing = { version = "0.1.0", default-features = false }
 sp-consensus-beefy = { version = "30.0.0", default-features = false }
 sp-consensus-grandpa = { version = "29.0.0", default-features = false }
 sp-core = { version = "43.0.0", default-features = false }
@@ -378,6 +379,7 @@ sp-arithmetic = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24
 sp-core = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 sp-io = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 sp-keystore = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+sp-crypto-hashing = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 sp-runtime = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 sp-statement-store = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 staging-xcm = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
