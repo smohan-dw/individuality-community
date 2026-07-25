@@ -137,7 +137,7 @@ indiv-pallet-score = { path = "pallets/score", default-features = false }
 indiv-pallet-storage-initialization = { path = "pallets/storage-initialization", default-features = false }
 indiv-pallet-value-transfer-auth = { path = "pallets/value-transfer-auth", default-features = false }
 indiv-precompile-personhood = { path = "precompiles/personhood", default-features = false }
-indiv-support = { path = "support", default-features = false }
+indiv-support = { git = "https://github.com/dhiway/cord", branch = "develop", default-features = false }
 log = { version = "0.4.22", default-features = false }
 merlin = { version = "3.0", default-features = false }
 pallet-ah-ops = { version = "0.7.0", default-features = false }
