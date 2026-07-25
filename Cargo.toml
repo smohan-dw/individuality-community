@@ -181,7 +181,7 @@ pallet-pgas-allowance = { version = "0.2.0", default-features = false }
 pallet-preimage = { version = "47.0.0", default-features = false }
 pallet-proxy = { version = "47.0.0", default-features = false }
 pallet-referenda = { version = "47.0.0", default-features = false }
-pallet-revive = { version = "0.15.0", default-features = false }
+pallet-revive = { version = "0.19.0", default-features = false }
 pallet-scheduler = { version = "48.0.0", default-features = false }
 pallet-session = { version = "47.0.0", default-features = false }
 pallet-skip-feeless-payment = { version = "22.0.0", default-features = false }
@@ -369,6 +369,20 @@ digest = { opt-level = 3 }
 # patch table). Not used by this repo's OTHER workspace members (the two `runtimes/next-*`
 # parachain runtimes, `game`, `value-transfer-auth`, `storage-initialization`) — those keep their
 # original stable2604 crates.io resolution; nothing here forces them onto stable2606.
+#
+# cord-commons Task 5.3 follow-up: `pallet-revive` added to both this file's `[workspace.
+# dependencies]` (version bumped `0.15.0` -> `0.19.0`, the exact version cord-commons' `dhiway/sdk`
+# pin resolves — same "bump the crates.io version REQUIREMENT, not the crate" rule as the Task 4.3
+# bump above) and to `[patch.crates-io]` below. `precompiles/personhood` is the first crate in this
+# workspace to have a REAL (non-dev) `pallet-revive` dependency; nothing else here touches
+# `pallet-revive` at all, so this edge was never previously exercised. Without the bump, this
+# fork's `pallet-revive = "0.15.0"` request and cord-commons' own `dhiway/sdk`-sourced `0.19.0` are
+# two semver-incompatible 0.x versions (Cargo's `^0.15.0` default caret requirement does not admit
+# `0.19.0`), so consuming this crate from cord-commons resolves TWO separate `pallet-revive`/
+# `sp-io` instances and fails to link (`E0152 duplicate lang item ... panic_impl`) — confirmed
+# empirically. Zero functional change: `precompiles/personhood`'s own source does not use any
+# `pallet-revive` API added between 0.15.0 and 0.19.0 (this repo's own `cargo test -p
+# indiv-precompile-personhood` stays clean against the bump).
 [patch.crates-io]
 frame-benchmarking = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 frame-executive = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
@@ -389,4 +403,5 @@ pallet-asset-conversion = { git = "https://github.com/dhiway/sdk", branch = "rel
 pallet-asset-conversion-tx-payment = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 pallet-asset-tx-payment = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 pallet-balances = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
+pallet-revive = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
 pallet-transaction-payment = { git = "https://github.com/dhiway/sdk", branch = "release-v1.24.0" }
