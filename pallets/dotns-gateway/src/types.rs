@@ -30,10 +30,8 @@ use sp_core::{ConstU32, H160};
 use sp_runtime::DispatchError;
 use verifiable::GenerateVerifiable;
 
-use crate::{
-	labels::{is_lite_person_label, is_person_label},
-	Config,
-};
+use crate::Config;
+use indiv_support::labels::{is_lite_person_label, is_person_label};
 
 /// The proof type from the configured `MemberService`.
 pub type ProofOf<T> =

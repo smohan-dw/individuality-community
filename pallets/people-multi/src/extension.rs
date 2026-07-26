@@ -31,7 +31,8 @@ use frame_support::{
 use frame_system::{CheckNonce, ValidNonceInfo};
 use indiv_support::traits::{Context, MembershipProver, RevisedContextualAlias};
 use scale_info::TypeInfo;
-use sp_core::twox_64;
+// stable2604->2606 API move (same class of fix as pallets/{airdrop,pgas,coinage,dotns-gateway}).
+use sp_crypto_hashing::twox_64;
 use sp_runtime::{
 	traits::{DispatchInfoOf, TransactionExtension, ValidateResult},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},

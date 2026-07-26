@@ -43,10 +43,6 @@ extern crate alloc;
 #[cfg(feature = "runtime-benchmarks")]
 pub mod benchmarking;
 pub mod extension;
-// cord-commons fork remedy — see this module's own doc comment for why it's vendored locally
-// rather than sourced from `indiv-support` (which this branch resolves to `github.com/dhiway/
-// cord`'s crate, which doesn't carry it).
-mod labels;
 pub mod types;
 pub mod weights;
 

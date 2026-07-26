@@ -746,7 +746,8 @@ pub mod pallet {
 		) -> DispatchResultWithPostInfo {
 			let origin_member = match origin.into_caller().try_into() {
 				Ok(Origin::<T>::SelfInclude(m)) => m,
-				_ => return Err(frame_support::error::BadOrigin.into()),
+				// stable2604->2606 API move: frame_support::error::BadOrigin relocated to sp_runtime::traits.
+				_ => return Err(sp_runtime::traits::BadOrigin.into()),
 			};
 			ensure!(origin_member == member, Error::<T>::NotMember);
 
