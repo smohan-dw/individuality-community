@@ -100,7 +100,7 @@ cumulus-pallet-weight-reclaim = { version = "0.9.0", default-features = false }
 cumulus-pallet-xcm = { version = "0.26.0", default-features = false }
 cumulus-pallet-xcmp-queue = { version = "0.27.0", default-features = false }
 cumulus-primitives-aura = { version = "0.23.0", default-features = false }
-cumulus-primitives-core = { version = "0.25.0", default-features = false }
+cumulus-primitives-core = { version = "0.26.0", default-features = false }
 cumulus-primitives-utility = { version = "0.27.0", default-features = false }
 ed25519-zebra = { version = "4.0.3", default-features = false }
 enumflags2 = { version = "0.7.10" }
