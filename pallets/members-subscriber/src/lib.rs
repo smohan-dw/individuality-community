@@ -66,7 +66,7 @@ pub mod pallet {
 		pallet_prelude::*,
 	};
 	use indiv_support::traits::{
-		BatchProofItem, Context, ContextualAlias, MembershipMultiProver, MembershipProver,
+		RingProofItem, Context, ContextualAlias, MembershipMultiProver, MembershipProver,
 		RevisedContextualAlias, RingExponent,
 	};
 	use xcm::v5::{Location, SendXcm};
@@ -1005,12 +1005,23 @@ pub mod pallet {
 		fn verify_memberships_in_ring(
 			identifier: &Identifier,
 			ring_index: RingIndex,
-			items: &[BatchProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
+			items: &[RingProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
 		) -> Result<Vec<RevisedContextualAlias>, DispatchError> {
 			let (capacity, roots) = Self::ring_proving_information(identifier, ring_index)?;
 
 			for record in roots.iter().rev() {
-				let Ok(aliases) = T::Crypto::batch_validate(capacity, &record.root, items) else {
+				// `verifiable` 1f9f675: ring `config`/`members` now live per-`BatchProofItem`.
+				let batch_items = items
+					.iter()
+					.map(|item| verifiable::BatchProofItem {
+						proof: item.proof.clone(),
+						config: capacity,
+						members: record.root.clone(),
+						context: item.context.clone(),
+						message: item.message.clone(),
+					})
+					.collect::<Vec<_>>();
+				let Ok(aliases) = T::Crypto::batch_validate(&batch_items) else {
 					continue;
 				};
 				debug_assert_eq!(aliases.len(), items.len());
@@ -1035,7 +1046,7 @@ pub mod pallet {
 			identifier: &Identifier,
 			ring_index: RingIndex,
 			revision: RevisionIndex,
-			items: &[BatchProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
+			items: &[RingProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
 		) -> Result<Vec<ContextualAlias>, DispatchError> {
 			let (capacity, roots) = Self::ring_proving_information(identifier, ring_index)?;
 			let record = roots
@@ -1043,7 +1054,18 @@ pub mod pallet {
 				.find(|r| r.revision == revision)
 				.ok_or(Error::<T>::RevisionNotFound)?;
 
-			let aliases = T::Crypto::batch_validate(capacity, &record.root, items)
+			// `verifiable` 1f9f675: ring `config`/`members` now live per-`BatchProofItem`.
+			let batch_items = items
+				.iter()
+				.map(|item| verifiable::BatchProofItem {
+					proof: item.proof.clone(),
+					config: capacity,
+					members: record.root.clone(),
+					context: item.context.clone(),
+					message: item.message.clone(),
+				})
+				.collect::<Vec<_>>();
+			let aliases = T::Crypto::batch_validate(&batch_items)
 				.map_err(|_| Error::<T>::InvalidProof)?;
 
 			debug_assert_eq!(aliases.len(), items.len());

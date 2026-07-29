@@ -356,7 +356,7 @@ fn setup_multi_recyclers<T: Config>(
 )]
 mod benches {
 	use super::*;
-	use verifiable::BatchProofItem;
+	use indiv_support::traits::RingProofItem;
 
 	fn setup_single_recycler_unload_prepaid<T: Config>(
 		n: u32,
@@ -1846,9 +1846,9 @@ mod benches {
 		let (value, ring_index, _aliases, proofs, proven_msg) =
 			T::BenchmarkHelper::setup_batch_verify(1)?;
 		let identifier = Pallet::<T>::recycler_collection_identifier(value);
-		let items: Vec<BatchProofItem<ProofOf<T>>> = proofs
+		let items: Vec<RingProofItem<ProofOf<T>>> = proofs
 			.iter()
-			.map(|proof| BatchProofItem {
+			.map(|proof| RingProofItem {
 				proof: proof.clone(),
 				message: proven_msg.to_vec(),
 				context: UNLOADING_RECYCLER_CONTEXT.to_vec(),
@@ -1874,9 +1874,9 @@ mod benches {
 		let (value, ring_index, _aliases, proofs, proven_msg) =
 			T::BenchmarkHelper::setup_batch_verify(n)?;
 		let identifier = Pallet::<T>::recycler_collection_identifier(value);
-		let items: Vec<BatchProofItem<ProofOf<T>>> = proofs
+		let items: Vec<RingProofItem<ProofOf<T>>> = proofs
 			.iter()
-			.map(|proof| BatchProofItem {
+			.map(|proof| RingProofItem {
 				proof: proof.clone(),
 				message: proven_msg.to_vec(),
 				context: UNLOADING_RECYCLER_CONTEXT.to_vec(),
@@ -1899,9 +1899,9 @@ mod benches {
 		let (value, ring_index, _aliases, proofs, proven_msg) =
 			T::BenchmarkHelper::setup_batch_verify(n)?;
 		let identifier = Pallet::<T>::recycler_collection_identifier(value);
-		let items: Vec<BatchProofItem<ProofOf<T>>> = proofs
+		let items: Vec<RingProofItem<ProofOf<T>>> = proofs
 			.iter()
-			.map(|proof| BatchProofItem {
+			.map(|proof| RingProofItem {
 				proof: proof.clone(),
 				message: proven_msg.to_vec(),
 				context: UNLOADING_RECYCLER_CONTEXT.to_vec(),
@@ -1929,9 +1929,9 @@ mod benches {
 		let (value, ring_index, _aliases, proofs, proven_msg) =
 			T::BenchmarkHelper::setup_batch_verify(n)?;
 		let identifier = Pallet::<T>::recycler_collection_identifier(value);
-		let items: Vec<BatchProofItem<ProofOf<T>>> = proofs
+		let items: Vec<RingProofItem<ProofOf<T>>> = proofs
 			.iter()
-			.map(|proof| BatchProofItem {
+			.map(|proof| RingProofItem {
 				proof: proof.clone(),
 				message: proven_msg.to_vec(),
 				context: UNLOADING_RECYCLER_CONTEXT.to_vec(),

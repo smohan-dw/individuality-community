@@ -24,8 +24,26 @@ use scale_info::TypeInfo;
 use sp_core::ConstU32;
 use sp_runtime::{traits::Member, BoundedVec, DispatchError, DispatchResult, Weight};
 use verifiable::{
-	ring::ark_vrf::suites::bandersnatch::BandersnatchSha512Ell2, BatchProofItem, GenerateVerifiable,
+	ring::ark_vrf::suites::bandersnatch::BandersnatchSha512Ell2, GenerateVerifiable,
 };
+
+/// A membership proof bundled with the context and message it was created for, for batch
+/// verification via [`MembershipMultiProver`].
+///
+/// Caller-facing counterpart of `verifiable::BatchProofItem`: as of `verifiable` `1f9f675`
+/// (ark-vrf 0.5.1) that type also carries the ring `members` set and `config` per item so a single
+/// batch may mix rings. Membership callers here never hold the root/config — the multi-prover impl
+/// looks them up once per ring (by identifier/revision) and constructs the full
+/// `verifiable::BatchProofItem` internally — so this local 3-field item preserves that API.
+#[derive(Clone)]
+pub struct RingProofItem<Proof> {
+	/// The ring-VRF proof to validate.
+	pub proof: Proof,
+	/// The context under which the proof was created.
+	pub context: Vec<u8>,
+	/// The message that was signed.
+	pub message: Vec<u8>,
+}
 
 /// Identity of personhood.
 ///
@@ -490,7 +508,7 @@ pub trait MembershipProver {
 	fn verify_memberships_in_ring(
 		identifier: &Identifier,
 		ring_index: RingIndex,
-		items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<RevisedContextualAlias>, DispatchError>;
 	/// Batch-verify multiple membership proofs against a specific revision of a ring's root.
 	///
@@ -511,7 +529,7 @@ pub trait MembershipProver {
 		identifier: &Identifier,
 		ring_index: RingIndex,
 		revision: RevisionIndex,
-		items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<ContextualAlias>, DispatchError>;
 	/// Query the current revision of a particular ring.
 	///

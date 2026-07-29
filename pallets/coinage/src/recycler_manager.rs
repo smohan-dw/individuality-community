@@ -26,7 +26,7 @@ use indiv_support::traits::{AppendOnlyMembers, MembershipProver, RingMode};
 use sp_runtime::transaction_validity::{
 	InvalidTransaction, TransactionValidityError, ValidTransaction,
 };
-use verifiable::BatchProofItem;
+use indiv_support::traits::RingProofItem;
 
 /// The error type for the load function.
 #[derive(Debug)]
@@ -265,7 +265,7 @@ impl<T: Config> RecyclerManager<T> {
 		// Build batch items: all proofs share the same message and context for a recycler input.
 		let items = alias_proofs
 			.iter()
-			.map(|proof| BatchProofItem {
+			.map(|proof| RingProofItem {
 				proof: proof.clone(),
 				message: proven_msg.to_vec(),
 				context: UNLOADING_RECYCLER_CONTEXT.to_vec(),

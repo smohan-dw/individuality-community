@@ -270,7 +270,7 @@ tokio = { version = "1.45.0", default-features = false, features = [
 	"rt-multi-thread",
 ] }
 tracing = { version = "0.1.37", default-features = false }
-verifiable = { git = "https://github.com/paritytech/verifiable", rev = "93464a69a9aeb0db5d392aae5963ca1d8b5d6fa5", default-features = false, version = "*" }
+verifiable = { git = "https://github.com/paritytech/verifiable", rev = "1f9f67524acce0d9c46dbbb566f84ce52757b114", default-features = false, version = "*" }
 xcm = { version = "24.0.0", package = "staging-xcm", default-features = false }
 xcm-builder = { version = "27.0.0", package = "staging-xcm-builder", default-features = false }
 xcm-executor = { version = "26.0.0", package = "staging-xcm-executor", default-features = false }

@@ -31,7 +31,7 @@ use frame_system::{
 	AuthorizeCall,
 };
 use indiv_support::traits::{
-	Alias, BatchProofItem, Context, ContextualAlias, Identifier, MembershipProver,
+	Alias, RingProofItem, Context, ContextualAlias, Identifier, MembershipProver,
 	RevisedContextualAlias, RevisionIndex, RingIndex,
 };
 use scale_info::TypeInfo;
@@ -298,14 +298,12 @@ impl GenerateVerifiable for TestVerifiable {
 	}
 
 	fn batch_validate(
-		capacity: Self::Config,
-		members: &Self::Members,
-		proofs: &[verifiable::BatchProofItem<Self::Proof>],
+		proofs: &[verifiable::BatchProofItemFor<Self>],
 	) -> Result<Vec<Alias>, VerifiableError> {
 		proofs
 			.iter()
 			.map(|item| {
-				Self::validate(capacity, &item.proof, members, &item.context, &item.message)
+				Self::validate(item.config, &item.proof, &item.members, &item.context, &item.message)
 			})
 			.collect()
 	}
@@ -425,7 +423,7 @@ impl MembershipProver for MockProver {
 	fn verify_memberships_in_ring(
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
-		_items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<RevisedContextualAlias>, DispatchError> {
 		unimplemented!("pgas mock does not use batch verification")
 	}
@@ -434,7 +432,7 @@ impl MembershipProver for MockProver {
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
 		_revision: RevisionIndex,
-		_items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<ContextualAlias>, DispatchError> {
 		unimplemented!("pgas mock does not use batch verification")
 	}

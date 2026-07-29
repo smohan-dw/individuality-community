@@ -29,12 +29,14 @@ use frame_system::{
 	offchain::{CreateAuthorizedTransaction, CreateTransaction, CreateTransactionBase},
 	AuthorizeCall,
 };
-use indiv_support::traits::{Alias, ContextualAlias, MembershipProver, RevisedContextualAlias};
+use indiv_support::traits::{
+	Alias, ContextualAlias, MembershipProver, RevisedContextualAlias, RingProofItem,
+};
 pub use indiv_support::traits::{Context, Identifier, RevisionIndex, RingExponent, RingIndex};
 use scale_info::TypeInfo;
 use sp_core::ConstU32;
 use sp_runtime::{BoundedVec, BuildStorage, DispatchError};
-use verifiable::{AliasVec, BatchProofItem, Entropy, Error as VerifiableError, GenerateVerifiable};
+use verifiable::{AliasVec, Entropy, Error as VerifiableError, GenerateVerifiable};
 
 use crate::types::AliasAccountInfo;
 
@@ -257,7 +259,7 @@ impl MembershipProver for MockMemberService {
 	fn verify_memberships_in_ring(
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
-		_items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<RevisedContextualAlias>, DispatchError> {
 		unimplemented!("alias-accounts mock does not use batch verification")
 	}
@@ -266,7 +268,7 @@ impl MembershipProver for MockMemberService {
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
 		_revision: RevisionIndex,
-		_items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<ContextualAlias>, DispatchError> {
 		unimplemented!("alias-accounts mock does not use batch verification")
 	}

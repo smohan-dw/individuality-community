@@ -22,7 +22,7 @@ use alloc::vec::Vec;
 use core::{cell::RefCell, ops::Range};
 use frame_support::{derive_impl, parameter_types};
 use indiv_support::traits::{
-	BatchProofItem, Context, ContextualAlias, Identifier, MembershipMultiProver, MembershipProver,
+	RingProofItem, Context, ContextualAlias, Identifier, MembershipMultiProver, MembershipProver,
 	RevisedContextualAlias, RevisionIndex, RingExponent, RingIndex, PEOPLE_IDENTIFIER,
 };
 use sp_core::{ConstU16, ConstU64, H256};
@@ -149,7 +149,7 @@ impl MembershipProver for MockMemberService {
 	fn verify_memberships_in_ring(
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
-		_items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<RevisedContextualAlias>, DispatchError> {
 		unimplemented!("not used by honour tests")
 	}
@@ -158,7 +158,7 @@ impl MembershipProver for MockMemberService {
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
 		_revision: RevisionIndex,
-		_items: &[BatchProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Self::Crypto as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<ContextualAlias>, DispatchError> {
 		unimplemented!("not used by honour tests")
 	}

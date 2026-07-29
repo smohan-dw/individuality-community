@@ -31,7 +31,9 @@ use frame_system::{
 };
 use indiv_pallet_people::Origin::PersonalAlias;
 use indiv_pallet_score::{AccountOrPerson, SCORE_CONTEXT};
-use indiv_support::traits::{ContextualAlias, RevisedContextualAlias, RingExponent};
+use indiv_support::traits::{
+	ContextualAlias, RevisedContextualAlias, RingExponent, RingProofItem,
+};
 use scale_info::TypeInfo;
 use sp_core::{ConstU32, ConstU64, ConstUint, H256};
 use sp_runtime::{
@@ -629,7 +631,7 @@ impl indiv_support::traits::MembershipProver for MockAirdropMemberService {
 	fn verify_memberships_in_ring(
 		_identifier: &indiv_support::traits::Identifier,
 		_ring_index: indiv_support::traits::RingIndex,
-		_items: &[verifiable::BatchProofItem<<Mock as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Mock as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<indiv_support::traits::RevisedContextualAlias>, DispatchError> {
 		unimplemented!()
 	}
@@ -638,7 +640,7 @@ impl indiv_support::traits::MembershipProver for MockAirdropMemberService {
 		_identifier: &indiv_support::traits::Identifier,
 		_ring_index: indiv_support::traits::RingIndex,
 		_revision: indiv_support::traits::RevisionIndex,
-		_items: &[verifiable::BatchProofItem<<Mock as GenerateVerifiable>::Proof>],
+		_items: &[RingProofItem<<Mock as GenerateVerifiable>::Proof>],
 	) -> Result<Vec<indiv_support::traits::ContextualAlias>, DispatchError> {
 		unimplemented!()
 	}

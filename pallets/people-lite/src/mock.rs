@@ -31,7 +31,7 @@ use frame_support::{
 };
 use frame_system::EnsureRoot;
 use indiv_support::traits::{
-	AppendOnlyMembers, BatchProofItem, Context, ContextualAlias, Identifier, MembershipProver,
+	AppendOnlyMembers, RingProofItem, Context, ContextualAlias, Identifier, MembershipProver,
 	RevisedContextualAlias, RevisionIndex, RingExponent, RingIndex, RingMode, RingPosition,
 	RingStatus,
 };
@@ -231,7 +231,7 @@ impl MembershipProver for MockMemberService {
 	fn verify_memberships_in_ring(
 		identifier: &Identifier,
 		_ring_index: RingIndex,
-		items: &[BatchProofItem<<Self::Crypto as verifiable::GenerateVerifiable>::Proof>],
+		items: &[RingProofItem<<Self::Crypto as verifiable::GenerateVerifiable>::Proof>],
 	) -> Result<Vec<RevisedContextualAlias>, DispatchError> {
 		let members = mock_member_service_members(identifier);
 		let members =
@@ -260,7 +260,7 @@ impl MembershipProver for MockMemberService {
 		identifier: &Identifier,
 		ring_index: RingIndex,
 		_revision: RevisionIndex,
-		items: &[BatchProofItem<<Self::Crypto as verifiable::GenerateVerifiable>::Proof>],
+		items: &[RingProofItem<<Self::Crypto as verifiable::GenerateVerifiable>::Proof>],
 	) -> Result<Vec<ContextualAlias>, DispatchError> {
 		Self::verify_memberships_in_ring(identifier, ring_index, items)
 			.map(|v| v.into_iter().map(|rca| rca.ca).collect())

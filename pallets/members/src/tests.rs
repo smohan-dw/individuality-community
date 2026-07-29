@@ -17,10 +17,10 @@
 use crate::{mock::*, *};
 use frame_support::{assert_noop, assert_ok};
 use indiv_support::traits::{
-	AppendOnlyMembers, FlexibleMembers, MembershipProver, RingExponent, RingStatus,
+	AppendOnlyMembers, FlexibleMembers, MembershipProver, RingExponent, RingProofItem, RingStatus,
 };
 use sp_runtime::transaction_validity::InvalidTransaction;
-use verifiable::{BatchProofItem, GenerateVerifiable};
+use verifiable::GenerateVerifiable;
 
 /// Generate members with a distinct first byte to avoid collisions with standard
 /// `generate_members` calls. Returns (member, secret) pairs.
@@ -3515,8 +3515,8 @@ mod verify_memberships_in_ring_tests {
 		proof: &<MockCrypto as GenerateVerifiable>::Proof,
 		message: &[u8],
 		context: Context,
-	) -> BatchProofItem<<MockCrypto as GenerateVerifiable>::Proof> {
-		BatchProofItem {
+	) -> RingProofItem<<MockCrypto as GenerateVerifiable>::Proof> {
+		RingProofItem {
 			proof: proof.clone(),
 			context: context.to_vec(),
 			message: message.to_vec(),
@@ -4112,8 +4112,8 @@ mod verify_memberships_in_ring_at_rev_tests {
 		proof: &<MockCrypto as GenerateVerifiable>::Proof,
 		message: &[u8],
 		context: Context,
-	) -> BatchProofItem<<MockCrypto as GenerateVerifiable>::Proof> {
-		BatchProofItem {
+	) -> RingProofItem<<MockCrypto as GenerateVerifiable>::Proof> {
+		RingProofItem {
 			proof: proof.clone(),
 			context: context.to_vec(),
 			message: message.to_vec(),

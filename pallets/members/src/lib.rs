@@ -49,7 +49,7 @@ use indiv_pallet_chunks_manager::ChunksApi;
 use indiv_support::traits::{
 	AppendOnlyMembers, AppendOnlyMembersWeightInfo, Context, ContextualAlias, FlexibleMembers,
 	MembershipMultiProver, MembershipProver, OnRingRootChange, PageIndex, RevisedContextualAlias,
-	RingExponent, RingIndex, RingMembersState, RingRootOp,
+	RingExponent, RingIndex, RingMembersState, RingProofItem, RingRootOp,
 };
 use scale_info::TypeInfo;
 use sp_runtime::{
@@ -2624,7 +2624,7 @@ pub mod pallet {
 		fn verify_memberships_in_ring(
 			identifier: &Identifier,
 			ring_index: RingIndex,
-			items: &[BatchProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
+			items: &[RingProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
 		) -> Result<Vec<RevisedContextualAlias>, DispatchError> {
 			let collection_info =
 				Collections::<T>::get(identifier).ok_or(Error::<T>::CollectionNotFound)?;
@@ -2634,7 +2634,19 @@ pub mod pallet {
 				.map_err(|_| Error::<T>::InvalidRingExponent)?;
 			let ring = Root::<T>::get(identifier, ring_index).ok_or(Error::<T>::NoRoot)?;
 
-			let aliases = T::Crypto::batch_validate(capacity, &ring.root, items)
+			// `verifiable` 1f9f675 moved the ring `config`/`members` from `batch_validate`'s args
+			// into each `BatchProofItem` (mixed-ring batches); this ring's are shared across items.
+			let batch_items = items
+				.iter()
+				.map(|item| BatchProofItem {
+					proof: item.proof.clone(),
+					config: capacity,
+					members: ring.root.clone(),
+					context: item.context.clone(),
+					message: item.message.clone(),
+				})
+				.collect::<Vec<_>>();
+			let aliases = T::Crypto::batch_validate(&batch_items)
 				.map_err(|_| Error::<T>::InvalidProof)?;
 
 			debug_assert_eq!(aliases.len(), items.len());
@@ -2658,7 +2670,7 @@ pub mod pallet {
 			identifier: &Identifier,
 			ring_index: RingIndex,
 			revision: RevisionIndex,
-			items: &[BatchProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
+			items: &[RingProofItem<<T::Crypto as GenerateVerifiable>::Proof>],
 		) -> Result<Vec<ContextualAlias>, DispatchError> {
 			let collection_info =
 				Collections::<T>::get(identifier).ok_or(Error::<T>::CollectionNotFound)?;
@@ -2669,7 +2681,18 @@ pub mod pallet {
 
 			let root = Self::get_root_at_revision(identifier, ring_index, revision)?;
 
-			let aliases = T::Crypto::batch_validate(capacity, &root, items)
+			// `verifiable` 1f9f675: ring `config`/`members` now live per-`BatchProofItem`.
+			let batch_items = items
+				.iter()
+				.map(|item| BatchProofItem {
+					proof: item.proof.clone(),
+					config: capacity,
+					members: root.clone(),
+					context: item.context.clone(),
+					message: item.message.clone(),
+				})
+				.collect::<Vec<_>>();
+			let aliases = T::Crypto::batch_validate(&batch_items)
 				.map_err(|_| Error::<T>::InvalidProof)?;
 
 			debug_assert_eq!(aliases.len(), items.len());

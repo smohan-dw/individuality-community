@@ -26,4 +26,4 @@ pub use reality::{
 	RingMutationMode, RingPosition, RingSize, RingStatus, Social, Statement, StatementOracle,
 	Truth, Username, CONTEXT_SIZE, PEOPLE_IDENTIFIER, PEOPLE_LITE_IDENTIFIER, RI_ZERO,
 };
-pub use verifiable::BatchProofItem;
+pub use reality::RingProofItem;

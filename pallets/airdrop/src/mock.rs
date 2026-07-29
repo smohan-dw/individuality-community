@@ -29,7 +29,7 @@ use frame_system::{
 };
 use indiv_support::traits::{
 	Alias, Context, ContextualAlias, Identifier, MembershipProver, RevisedContextualAlias,
-	RevisionIndex, RingIndex,
+	RevisionIndex, RingIndex, RingProofItem,
 };
 use sp_core::sr25519;
 use sp_runtime::{
@@ -41,7 +41,7 @@ use sp_runtime::{
 	traits::TryConvert,
 	BuildStorage, DispatchError,
 };
-use verifiable::{mock::Mock, AliasVec, BatchProofItem, Entropy, Error, GenerateVerifiable};
+use verifiable::{mock::Mock, AliasVec, Entropy, Error, GenerateVerifiable};
 
 pub type Header = sp_runtime::generic::Header<u64, sp_runtime::traits::BlakeTwo256>;
 pub type Block = sp_runtime::generic::Block<Header, Extrinsic>;
@@ -307,7 +307,7 @@ impl MembershipProver for MockMemberService {
 	fn verify_memberships_in_ring(
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
-		_items: &[BatchProofItem<MockProof>],
+		_items: &[RingProofItem<MockProof>],
 	) -> Result<Vec<RevisedContextualAlias>, DispatchError> {
 		unimplemented!()
 	}
@@ -316,7 +316,7 @@ impl MembershipProver for MockMemberService {
 		_identifier: &Identifier,
 		_ring_index: RingIndex,
 		_revision: RevisionIndex,
-		_items: &[BatchProofItem<MockProof>],
+		_items: &[RingProofItem<MockProof>],
 	) -> Result<Vec<ContextualAlias>, DispatchError> {
 		unimplemented!()
 	}

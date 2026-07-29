@@ -2189,7 +2189,7 @@ mod offchain_worker {
 mod proof_verification {
 	use super::*;
 	use crate::pallet::Error;
-	use indiv_support::traits::{BatchProofItem, MembershipProver};
+	use indiv_support::traits::{RingProofItem, MembershipProver};
 
 	const CTX: crate::types::Context = [9u8; 32];
 	const MSG: &[u8] = b"msg";
@@ -2338,7 +2338,7 @@ mod proof_verification {
 
 			let items = [b"m1", b"m2"]
 				.iter()
-				.map(|&msg| BatchProofItem {
+				.map(|&msg| RingProofItem {
 					proof: TestProof {
 						context: CTX.to_vec(),
 						member: TestMemberKey(42),
@@ -2363,12 +2363,12 @@ mod proof_verification {
 
 			// Second item's proof doesn't match the stored root.
 			let items = vec![
-				BatchProofItem {
+				RingProofItem {
 					proof: proof_for(42),
 					context: CTX.to_vec(),
 					message: MSG.to_vec(),
 				},
-				BatchProofItem {
+				RingProofItem {
 					proof: proof_for(99),
 					context: CTX.to_vec(),
 					message: MSG.to_vec(),
@@ -2389,7 +2389,7 @@ mod proof_verification {
 			push_revision(PEOPLE, 2, 99);
 
 			// Valid batch against revision 1.
-			let items = vec![BatchProofItem {
+			let items = vec![RingProofItem {
 				proof: proof_for(42),
 				context: CTX.to_vec(),
 				message: MSG.to_vec(),

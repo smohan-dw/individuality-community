@@ -37,7 +37,7 @@ use sp_runtime::{
 };
 use std::sync::Arc;
 use verifiable::{
-	Alias, AliasVec, BatchProofItem, Entropy, Error as VerifiableError, GenerateVerifiable,
+	Alias, AliasVec, Entropy, Error as VerifiableError, GenerateVerifiable,
 };
 use xcm::v5::{Assets, Location, SendError, SendResult, SendXcm, Xcm, XcmHash};
 
@@ -330,14 +330,12 @@ impl GenerateVerifiable for TestVerifiable {
 	}
 
 	fn batch_validate(
-		capacity: Self::Config,
-		members: &Self::Members,
-		proofs: &[BatchProofItem<Self::Proof>],
+		proofs: &[verifiable::BatchProofItemFor<Self>],
 	) -> Result<Vec<Alias>, VerifiableError> {
 		proofs
 			.iter()
 			.map(|item| {
-				Self::validate(capacity, &item.proof, members, &item.context, &item.message)
+				Self::validate(item.config, &item.proof, &item.members, &item.context, &item.message)
 			})
 			.collect()
 	}
